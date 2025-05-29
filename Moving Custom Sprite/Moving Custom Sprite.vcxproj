@@ -84,11 +84,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\sprite.cpp" />
     <ClCompile Include="arrow.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="movingCustom.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\sprites.h" />
     <ClInclude Include="arrow.h" />
     <ClInclude Include="bullet.h" />
   </ItemGroup>

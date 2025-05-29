@@ -1,4 +1,5 @@
 #include "arrow.h"
+#include "../sprites.h"
 arrowClass::arrowClass()
 {
 	speed=0;
@@ -6,66 +7,38 @@ arrowClass::arrowClass()
 	y=100;
 	dir=1;
 	score = 0;
-	for(int i=0; i<4; i++)
-	{
-		arrow_bmp[i]=NULL;
-	}
+	arrow_bmp = nullptr;
 }
 arrowClass::~arrowClass()
 {
-	for(int i=0; i<4; i++)
-	{
-		al_destroy_bitmap(arrow_bmp[i]);
-	}
+	al_destroy_bitmap(arrow_bmp);
 }
 void arrowClass::drawArrow()
 {
-	al_draw_bitmap(arrow_bmp[getDirection()], getX(), getY(), 0);
+	float angle = get_angle(dir); // dir is your direction (0-3)
+	al_draw_rotated_bitmap(arrow_bmp, 32, 32, x + 32, y + 32, angle, 0);
 }
-void arrowClass::create_arrow_bitmap(ALLEGRO_DISPLAY *display)
-{
-	for(int i=0;i<4; i++)
-	{
-		arrow_bmp[i]=al_create_bitmap(32,32);   
-		if(!arrow_bmp[i]) {
-			exit(1);
-			al_destroy_display(display);
 
-		}
-
-		al_set_target_bitmap(arrow_bmp[i]);
-		al_clear_to_color(al_map_rgb(0, 0, 0));
-
-		int x = 15;
-		int y = 15;
-		al_draw_filled_rectangle(x-10, y-10, x+10, y+10, al_map_rgb(255, 255, 255));
-
-		switch(i)
-		{
-		case 0: //Up
-			al_draw_filled_triangle(x-10,y-10,x+11,y-10,x,y-15,al_map_rgb(255, 0, 0));
-			break;
-		case 1://Right
-			al_draw_filled_triangle(x+11,y-11,x+11,y+11,x+15,y,al_map_rgb(255, 0, 0));
-			break;
-		case 2://Down
-			al_draw_filled_triangle(x-11,y+11,x+11,y+11,x,y+15,al_map_rgb(255, 0, 0));
-			break;
-		case 3: //Left
-			al_draw_filled_triangle(x-11,y-11,x-11,y+11,x-15,y,al_map_rgb(255, 0, 0));
-			break;
-		}
+float get_angle(int dir) {
+	switch (dir) {
+	case 0: return 0.0f;                         // UP
+	case 1: return ALLEGRO_PI / 2;               // RIGHT
+	case 2: return ALLEGRO_PI;                   // DOWN
+	case 3: return 3 * ALLEGRO_PI / 2;           // LEFT
+	default: return 0.0f;
 	}
+}
+
+void arrowClass::create_arrow_bitmap(ALLEGRO_DISPLAY* display) {
+	if (arrow_bmp) {
+		al_destroy_bitmap(arrow_bmp); // clean up previous bitmap
+	}
+	arrow_bmp = create_custom_sprite();
 }
 void arrowClass::erase_arrow()
 {
 
-	int left = x ;
-	int top = y;
-	int right = x + 32;
-	int bottom =y + 32;
-
-	al_draw_filled_rectangle(left, top, right, bottom, al_map_rgb(0, 0, 0));
+	al_draw_filled_rectangle(x, y, x + 64, y + 64, al_map_rgb(0, 0, 0));
 }
 
 void arrowClass::up()
