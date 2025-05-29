@@ -52,6 +52,10 @@ int main(void)
 
 	arrow.create_arrow_bitmap(display);
 
+	for (int i = 0; i < 10; i++) {
+		mybullet[i].create_bullet_bitmap();
+	}
+
 
 	al_set_target_bitmap(al_get_backbuffer(display));
 	event_queue = al_create_event_queue();
@@ -125,6 +129,8 @@ int main(void)
 				mybullet[i].erase_bullet();
 				score+=mybullet[i].move_bullet(arrow.getX(),arrow.getY(),32,32,height);
 			}
+
+			al_draw_filled_rectangle(0, 480, 640, 520, al_map_rgb(0, 0, 0));
 
 			al_draw_textf(font, al_map_rgb(255, 255, 255), 10, 485, 0, "Time: %.1f", gameTime); // 30 seconds countdown on display
 

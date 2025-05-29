@@ -54,7 +54,7 @@ int bullet::move_bullet (int arrowX, int arrowY, int width, int length, int heig
 	al_set_target_bitmap(bullet_bmp);
 
 	//blue background
-	al_clear_to_color(al_map_rgb(0, 0, 255));
+	al_clear_to_color(al_map_rgb(0, 0, 0));
 
 	// yellow filled circle (center)
 	al_draw_filled_circle(8, 8, 5, al_map_rgb(255, 255, 0));
