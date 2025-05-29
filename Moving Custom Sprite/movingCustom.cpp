@@ -2,6 +2,9 @@
 #include <allegro5\allegro_primitives.h>
 #include "arrow.h";
 #include "bullet.h"
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
+#include <iostream>
 
 int main(void)
 {
@@ -15,7 +18,7 @@ int main(void)
 
 	//variables
 	int width = 640;
-	int height = 480;
+	int height = 520; //changed height to 520 (was 480)
 	bool done = false;
 
 	//allegro variable
@@ -35,6 +38,18 @@ int main(void)
 	//addon init
 	al_install_keyboard();
 	al_init_primitives_addon();
+
+	al_init_font_addon();
+	al_init_ttf_addon();
+
+	ALLEGRO_FONT* font = al_load_font("ARIAL.TTF", 18, 0);
+	if (!font) {
+		std::cerr << "Failed to load font.\n";
+		return -1;
+	}
+
+
+
 	arrow.create_arrow_bitmap(display);
 
 
@@ -110,11 +125,17 @@ int main(void)
 				mybullet[i].erase_bullet();
 				score+=mybullet[i].move_bullet(arrow.getX(),arrow.getY(),32,32,height);
 			}
+
+			al_draw_textf(font, al_map_rgb(255, 255, 255), 10, 485, 0, "Time: %.1f", gameTime); // 30 seconds countdown on display
+
+			al_draw_textf(font, al_map_rgb(255, 255, 255), 200, 485, 0, "Score: %d", score); //score display
+
 		}
 		al_flip_display();
 	}
 	al_destroy_event_queue(event_queue);
 	al_destroy_timer(timer);
+	al_destroy_font(font);
 	al_destroy_display(display);						//destroy our display object
 	system("pause");
 	return 0;
