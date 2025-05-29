@@ -1,4 +1,9 @@
 #include "bullet.h"
+#include <iostream>
+#include <cstdlib>
+#include <allegro5/allegro5.h>
+#include <allegro5/allegro_primitives.h>
+
 bullet::bullet()
 {
 	alive = false;;
@@ -36,6 +41,16 @@ int bullet::move_bullet (int arrowX, int arrowY, int width, int length, int heig
 	return 0;
 
 
-} 
+} void bullet::create_bullet_bitmap() {
+
+	// Create a bitmap for the bullet
+	bullet_bmp = al_create_bitmap(16, 16);
+	if (!bullet_bmp) {
+		std::cerr << "Failed to create bullet bitmap.\n";
+		return;
+	}
+	
+
+}
 
 
