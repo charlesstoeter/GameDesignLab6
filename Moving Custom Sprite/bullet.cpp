@@ -23,7 +23,7 @@ void bullet::fire()
 }
 void bullet::erase_bullet()
 {
-	al_draw_filled_rectangle(x,y,x+5,y+5,al_map_rgb(0,0,0)); //black color
+	al_draw_filled_rectangle(x, y, x + 16, y + 16, al_map_rgb(0, 0, 0));
 }
 int bullet::move_bullet (int arrowX, int arrowY, int width, int length, int height)
 {
@@ -31,10 +31,10 @@ int bullet::move_bullet (int arrowX, int arrowY, int width, int length, int heig
 	al_draw_bitmap(bullet_bmp, x, y, 0);
 
 
-	if (x > arrowX && x < arrowX+width && y > arrowY && y < arrowY+length) {
-		al_draw_filled_rectangle(x,y,x+5,y+5,al_map_rgb(0,0,0)); //BLACK
-		alive=false;
-		return 1;
+	if (x + 16 > arrowX && x < arrowX + width && y + 16 > arrowY && y < arrowY + length) {
+		al_draw_filled_rectangle(x, y, x + 16, y + 16, al_map_rgb(0, 0, 0)); // erase bullet
+		alive = false;
+		return 1; // hit
 	}
 	if (y> height)
 		alive = false;
